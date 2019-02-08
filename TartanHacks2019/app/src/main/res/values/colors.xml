@@ -3,4 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="loginPurple">#551A8B</color>
+    <color name="homeTab">#400E78</color>
+    <color name="tab2">#551A8B</color>
+    <color name="tab3">#A875E1  </color>
+    <color name="tab4">#CDB5E7 </color>
+    <color name="white">#FFFFFF</color>
 </resources>
