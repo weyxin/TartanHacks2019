@@ -2,6 +2,7 @@ package com.example.tartanhacks2019;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,24 @@ import android.widget.*;
 import android.provider.*;
 import com.microsoft.projectoxford.face.*;
 import com.microsoft.projectoxford.face.contract.*;
+import com.parse.ParseFile;
+import com.parse.ParseQuery;
+import java.util.ArrayList;
+
+import java.io.File;
+import java.util.Arrays;
+import java.net.URI;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import javax.xml.transform.Result;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -78,8 +97,8 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                 ImageView imageView = getView().findViewById(R.id.imageView1);
                 imageView.setImageBitmap(bitmap);
 
-                // Comment out for tutorial
                 detectAndFrame(bitmap);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -151,6 +170,9 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                         ImageView imageView = getView().findViewById(R.id.imageView1);
                         imageView.setImageBitmap(
                                 drawFaceRectanglesOnBitmap(imageBitmap, result));
+                        for (Face f: result) {
+                            peopleGroup(f);
+                        }
                         imageBitmap.recycle();
                     }
                 };
@@ -188,5 +210,82 @@ public class homeFragment extends Fragment implements View.OnClickListener {
             }
         }
         return bitmap;
+    }
+
+    public void peopleGroup(Face f) {
+        String personGroupID = "friends";
+        try{
+            faceServiceClient.createPersonGroup(personGroupID, "friends", null);
+            CreatePersonResult friend1 = faceServiceClient.createPerson("friends", personGroupID, "Bill");
+            CreatePersonResult friend2 = faceServiceClient.createPerson("friends", personGroupID, "Anna");
+            ParseQuery<Person> query= ParseQuery.getQuery(Person.class);
+            ArrayList<Person> people = new ArrayList<Person>();
+            try {
+                List<Person> people2 = query.find();
+                people = (ArrayList<Person>) people2;
+                Log.d(("Tab2Fragment"), Integer.toString(people.size()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            ParseFile profile = people.get(0).getProfileImage();
+            if(profile != null) {
+                //Glide.with(getContext()).load(profile.getUrl()).into(frontProfile);
+                faceServiceClient.addPersonFace(personGroupID, friend1.personId, profile.getUrl(), null, null);
+            }
+            ParseFile profile1 = people.get(1).getProfileImage();
+            if(profile1 != null) {
+                faceServiceClient.addPersonFace(personGroupID, friend2.personId, profile1.getUrl(), null, null);
+            }
+            faceServiceClient.trainPersonGroup(personGroupID);
+            TrainingStatus trainingStatus = null;
+            while(true) {
+                trainingStatus = faceServiceClient.getPersonGroupTrainingStatus(personGroupID);
+                if (trainingStatus.status != TrainingStatus.Status.Running) {
+                    break;
+                }
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /*public async Task<ActionResult> Train(String id)
+    {
+        await FaceClient.TrainPersonGroupAsync(id);
+        return RedirectToAction("Details", new { id = id });
+    }
+
+    private void train(){
+        HttpClient httpclient = HttpClients.createDefault();
+
+        try
+        {
+            URIBuilder builder = new URIBuilder("https://westus.api.cognitive.microsoft.com/face/v1.0/persongroups/{personGroupId}/train");
+            Task<string> task = Task.Run<string>(async () => await GetHttpResponseString(url, contentModerationKey, image, contentType));
+            string result = task.Result;
+            /*URI uri = builder.build();
+            HttpPost request = new HttpPost(uri);
+            request.setHeader("Ocp-Apim-Subscription-Key", "{subscription key}");
+
+
+            // Request body
+            StringEntity reqEntity = new StringEntity("{body}");
+            request.setEntity(reqEntity);
+
+            HttpResponse response = httpclient.execute(request);
+            HttpEntity entity = response.getEntity();
+
+            if (entity != null)
+            {
+                System.out.println(EntityUtils.toString(entity));
+            }*/
+        /*}
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }*/
     }
 }
