@@ -17,6 +17,6 @@ public class CardPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 1;
     }
 }
