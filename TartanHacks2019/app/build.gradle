@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.tartanhacks2019"
-        minSdkVersion 19
+        minSdkVersion 22
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.parse.bolts:bolts-android:1.4.0'
     implementation 'com.parse:parse-android:1.17.3'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    implementation 'com.microsoft.projectoxford:face:1.4.3'
 
     implementation project(':spotify-app-remote-release-0.6.0')
     implementation "com.google.code.gson:gson:2.8.5"
