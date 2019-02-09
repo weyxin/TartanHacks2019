@@ -33,10 +33,12 @@ public class Tab2Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        cardPagerAdapter = new CardPagerAdapter(getFragmentManager());
+
         model = ViewModelProviders.of((FragmentActivity) getContext()).get(SharedViewModel.class);
-        viewPager = view.findViewById(R.id.view_pager);
-        viewPager.setAdapter(cardPagerAdapter);
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.Tab2, new CardContainerFragment())
+                .commit();
         loadCards();
     }
 

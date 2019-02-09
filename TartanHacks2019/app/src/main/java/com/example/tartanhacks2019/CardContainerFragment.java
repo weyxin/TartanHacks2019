@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class CardContainerFragment extends Fragment {
     private boolean cardFlipped = false;
 
     public CardContainerFragment() {
+        Log.d("created", "CardContainer");
         setHasOptionsMenu(true);
     }
 
@@ -37,10 +39,10 @@ public class CardContainerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_card_container, container, false);
         model = ViewModelProviders.of((FragmentActivity) getContext()).get(SharedViewModel.class);
         model.setCurrCard(getRandomCard(model.getContacts()));
-        Log.d("CardContainerFragment", model.getCurrCard().getName());
+        //Log.d("CardContainerFragment", model.getCurrCard().getName());
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, new CardFrontFragment())
+                 .add(R.id.container, new CardFrontFragment())
                 .commit();
         return rootView;
     }
@@ -69,6 +71,7 @@ public class CardContainerFragment extends Fragment {
     public void flipCard() {
         Fragment newFragment;
         if (cardFlipped) {
+            model.setCurrCard(getRandomCard(model.getContacts()));
             newFragment = new CardFrontFragment();
         } else {
             newFragment = new CardBackFragment();
@@ -81,8 +84,8 @@ public class CardContainerFragment extends Fragment {
                         R.animator.card_flip_left_in, R.animator.card_flip_left_out)
                 .replace(R.id.container, newFragment)
                 .commit();
-
         cardFlipped = !cardFlipped;
+
     }
 
     public static class CardFrontFragment extends Fragment {
