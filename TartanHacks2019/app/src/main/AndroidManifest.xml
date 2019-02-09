@@ -13,7 +13,7 @@
     <application
         android:name=".ParseApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="Reconnect"
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
