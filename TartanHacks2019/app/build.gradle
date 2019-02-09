@@ -36,9 +36,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     implementation 'com.microsoft.projectoxford:face:1.4.3'
     implementation 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
-    implementation 'org.apache.httpcomponents:httpcore:4.4.1'
+    //implementation 'org.apache.httpcomponents:httpcore:4.4.1'
     //compile 'com.android.support:appcompat-v7:22.2.0'
-    implementation 'org.apache.httpcomponents:httpclient:4.5'
+    //implementation 'org.apache.httpcomponents:httpclient:4.5'
 
     implementation project(':spotify-app-remote')
     implementation "com.google.code.gson:gson:2.8.5"

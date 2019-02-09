@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@id/tvArtist"
         android:layout_marginBottom="5dp"
-        android:textSize="15dp"
+        android:textSize="35dp"
         android:text="TextView" />
 
     <TextView
@@ -29,10 +29,13 @@
     <Button
         android:id="@+id/pausePlay"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="15dp"
+        android:textAllCaps="false"
+        android:background="#20BF9F"
+        android:textColor="@color/white"
         android:text="Pause / Play" />
 
     <TextView
@@ -40,8 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textSize="30dp"
+        android:textStyle="bold"
         android:text="Choose Mood" />
 
     <ImageView
@@ -49,7 +53,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_below="@id/tvMainTitle"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="50dp"
         android:clickable="true"
@@ -71,7 +75,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_below="@id/tvMainTitle"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="50dp"
         android:clickable="true"

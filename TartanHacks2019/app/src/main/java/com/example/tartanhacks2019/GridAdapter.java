@@ -18,10 +18,12 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
     ArrayList<Person> mPeople;
     private Context context;
+    private DetailsDialogFragment detailsDialogFragment;
+    SharedViewModel model;
 
-    public GridAdapter(ArrayList<Person> people) {
-        Log.d("GridAdapter", Integer.toString(people.size()));
+    public GridAdapter(ArrayList<Person> people, SharedViewModel model2) {
         mPeople = people;
+        model = model2;
     }
 
     @NonNull
@@ -35,10 +37,8 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull GridAdapter.ViewHolder viewHolder, int i) {
-        Log.d("GridAdapter", "Binding name and image");
         Person person = mPeople.get(i);
         String name = person.getName();
-        Log.d("GridAdapter", name);
 
         if (name != null) {
             viewHolder.tvName.setText(name);
@@ -67,13 +67,19 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
             super(itemView);
             ivProfile = (ImageView) itemView.findViewById(R.id.ivProfile);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
+            Log.d("GridAdapter", Integer.toString(position));
             if (position != RecyclerView.NO_POSITION) {
-                //Show details page for that person
+                model.setGalleryPerson(mPeople.get(position));
+                detailsDialogFragment = DetailsDialogFragment.newInstance();
+                detailsDialogFragment.show(model.getFragmentManager(), "Details Dialog");
+                //FragmentTransaction fragmentTransaction = model.getFragmentManager().beginTransaction();
+                //fragmentTransaction.replace(R.id.flContainer, detailsDialogFragment).commit();
             }
         }
     }

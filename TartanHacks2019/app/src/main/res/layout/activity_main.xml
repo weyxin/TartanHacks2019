@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_below="@id/ivLogo"
+        android:layout_marginTop="30dp"
         android:paddingLeft="10dp"
         android:ems="10"
         android:hint="Username"
@@ -23,14 +24,14 @@
         android:id="@+id/password"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/username"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:paddingLeft="10dp"
+        android:background="@color/white"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPersonName" />
+        android:inputType="textPassword"
+        android:paddingLeft="10dp" />
 
     <Button
         android:id="@+id/login"
@@ -39,6 +40,18 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/password"
         android:layout_marginTop="30dp"
+        android:background="#20BF9F"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAllCaps="false"
         android:text="Login" />
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="300dp"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/reconnect_logo_green" />
 
 </RelativeLayout>

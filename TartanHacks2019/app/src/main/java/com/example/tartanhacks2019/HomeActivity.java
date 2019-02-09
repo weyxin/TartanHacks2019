@@ -1,5 +1,6 @@
 package com.example.tartanhacks2019;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,8 +15,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        SharedViewModel model = ViewModelProviders.of(this).get(SharedViewModel.class);
         final FragmentManager fragmentManager = getSupportFragmentManager();
+        model.setFragmentManager(fragmentManager);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         final Fragment homeFragment = new homeFragment();
         final Fragment tab2Fragment = new Tab2Fragment();

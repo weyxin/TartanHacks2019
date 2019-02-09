@@ -1,31 +1,45 @@
 package com.example.tartanhacks2019;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.net.ParseException;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import java.io.*;
-import android.app.*;
-import android.content.*;
-import android.net.*;
-import android.os.*;
-import android.view.*;
-import android.graphics.*;
-import android.widget.*;
-import android.provider.*;
-import com.microsoft.projectoxford.face.*;
-import com.microsoft.projectoxford.face.contract.*;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import com.microsoft.projectoxford.face.FaceServiceClient;
+import com.microsoft.projectoxford.face.FaceServiceRestClient;
+import com.microsoft.projectoxford.face.contract.CreatePersonResult;
+import com.microsoft.projectoxford.face.contract.Face;
+import com.microsoft.projectoxford.face.contract.FaceRectangle;
+import com.microsoft.projectoxford.face.contract.TrainingStatus;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
-import java.util.ArrayList;
 
-import java.io.File;
-import java.util.Arrays;
-import java.net.URI;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
+/*
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -33,10 +47,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-
-import javax.xml.transform.Result;
-
-import static android.app.Activity.RESULT_OK;
+*/
 
 public class homeFragment extends Fragment implements View.OnClickListener {
     private final int PICK_IMAGE = 1;
@@ -288,4 +299,3 @@ public class homeFragment extends Fragment implements View.OnClickListener {
             System.out.println(e.getMessage());
         }*/
     }
-}
