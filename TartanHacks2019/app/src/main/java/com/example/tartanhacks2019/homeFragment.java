@@ -22,12 +22,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import java.util.UUID;
 
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
 import com.microsoft.projectoxford.face.contract.CreatePersonResult;
 import com.microsoft.projectoxford.face.contract.Face;
 import com.microsoft.projectoxford.face.contract.FaceRectangle;
+import com.microsoft.projectoxford.face.contract.IdentifyResult;
 import com.microsoft.projectoxford.face.contract.TrainingStatus;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
@@ -215,9 +217,11 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                         ImageView imageView = getView().findViewById(R.id.imageView1);
                         imageView.setImageBitmap(
                                 drawFaceRectanglesOnBitmap(imageBitmap, result, personName));
-                        for (Face f: result) {
+
+                        /*for (Face f: result) {
                             peopleGroup(f);
-                        }
+                        }*/
+                        peopleGroup(result);
                         imageBitmap.recycle();
                     }
                 };
@@ -261,12 +265,12 @@ public class homeFragment extends Fragment implements View.OnClickListener {
         return bitmap;
     }
 
-    public void peopleGroup(Face f) {
+    public void peopleGroup(Face[] f) {
         String personGroupID = "friends";
         try{
             faceServiceClient.createPersonGroup(personGroupID, "friends", null);
-            CreatePersonResult friend1 = faceServiceClient.createPerson("friends", personGroupID, "Bill");
-            CreatePersonResult friend2 = faceServiceClient.createPerson("friends", personGroupID, "Anna");
+            CreatePersonResult friend1 = faceServiceClient.createPerson("friends", personGroupID, "Anna");
+            CreatePersonResult friend2 = faceServiceClient.createPerson("friends", personGroupID, "Matt");
             ParseQuery<Person> query= ParseQuery.getQuery(Person.class);
             ArrayList<Person> people = new ArrayList<Person>();
             try {
@@ -293,6 +297,11 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                     break;
                 }
             }
+            List<UUID> faceids = new ArrayList<UUID>();
+            for(Face f1 : f){
+                faceids.add(f1.faceId);
+            }
+            IdentifyResult[] result = faceServiceClient.identity(personGroupID, (UUID[]) faceids.toArray(), 1);
 
         }
         catch (Exception e) {
