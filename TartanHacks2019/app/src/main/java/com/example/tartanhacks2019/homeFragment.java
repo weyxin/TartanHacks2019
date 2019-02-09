@@ -17,9 +17,11 @@ import android.widget.*;
 import android.provider.*;
 import com.microsoft.projectoxford.face.*;
 import com.microsoft.projectoxford.face.contract.*;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import java.util.ArrayList;
+
 
 import java.io.File;
 import java.util.Arrays;
@@ -30,8 +32,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import javax.xml.transform.Result;
@@ -125,7 +125,11 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                                     params[0],
                                     true,         // returnFaceId
                                     false,        // returnFaceLandmarks
-                                    null          // returnFaceAttributes:
+                                    new FaceServiceClient.FaceAttributeType[] {
+                                            FaceServiceClient.FaceAttributeType.Age,
+                                            FaceServiceClient.FaceAttributeType.Gender, FaceServiceClient.FaceAttributeType.Smile,
+                                            FaceServiceClient.FaceAttributeType.FacialHair, FaceServiceClient.FaceAttributeType.Hair,
+                                            FaceServiceClient.FaceAttributeType.Makeup}         // returnFaceAttributes:
                                 /* new FaceServiceClient.FaceAttributeType[] {
                                     FaceServiceClient.FaceAttributeType.Age,
                                     FaceServiceClient.FaceAttributeType.Gender }
@@ -170,7 +174,7 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                         ImageView imageView = getView().findViewById(R.id.imageView1);
                         imageView.setImageBitmap(
                                 drawFaceRectanglesOnBitmap(imageBitmap, result));
-                        for (Face f: result) {
+                       for (Face f: result) {
                             peopleGroup(f);
                         }
                         imageBitmap.recycle();
@@ -211,8 +215,77 @@ public class homeFragment extends Fragment implements View.OnClickListener {
         }
         return bitmap;
     }
+    protected Face[] readIn (InputStream p) {
+        try {
+            // Start detection.
+            return faceServiceClient.detect(
+                    p,  /* Input stream of image to detect */
+                    true,         // returnFaceId
+                    false,        // returnFaceLandmarks
+                    new FaceServiceClient.FaceAttributeType[]{
+                            FaceServiceClient.FaceAttributeType.Age,
+                            FaceServiceClient.FaceAttributeType.Gender, FaceServiceClient.FaceAttributeType.Smile,
+                            FaceServiceClient.FaceAttributeType.FacialHair, FaceServiceClient.FaceAttributeType.Hair,
+                            FaceServiceClient.FaceAttributeType.Makeup});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Face[1];
+    }
 
     public void peopleGroup(Face f) {
+
+
+        ParseQuery<Person> query= ParseQuery.getQuery(Person.class);
+        ArrayList<Person> people = new ArrayList<Person>();
+        try {
+            List<Person> people2 = query.find();
+            people = (ArrayList<Person>) people2;
+            Log.d(("Tab2Fragment"), Integer.toString(people.size()));
+
+        } catch(com.parse.ParseException e){ e.printStackTrace();}
+
+        for(Person p: people) {
+            try{
+                Face[] info = readIn(p.getProfileImage().getDataStream());
+                if (info != null) {
+                    for (Face face : info) {
+                        VerifyResult f2 = faceServiceClient.verify(face.faceId, f.faceId);
+                        Log.d("Name",p.getName() + f2.confidence);
+                        if(f2.isIdentical) {
+                            Log.d("Name",p.getName());
+                            return;
+                        }
+                    }
+                }
+            }
+            catch(Exception e) {
+            e.printStackTrace();
+        }
+
+            }
+            /*VerifyResult f2 = new VerifyResult();
+
+            try{
+               // Face[] works = doInBackground(p);
+                if(works[0] == null) {
+                    Log.d("Name", "Null");
+                }
+                 f2= faceServiceClient.verify(f.faceId, works[0].faceId);
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            Log.d("Name",p.getName() + f2.confidence);
+            if(f2.isIdentical) {
+                Log.d("Name",p.getName());
+                return;
+            }*/
+        }
+
+    }
+
+    /*public void peopleGroup(Face f) {
         String personGroupID = "friends";
         try{
             faceServiceClient.createPersonGroup(personGroupID, "friends", null);
@@ -250,7 +323,18 @@ public class homeFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
 
-    }
+    }*/
+
+    /*public String identifyFace() {
+        // Step 5. Call Verify method.
+        ObjectResult<VerifyValue> result5 = face.Verify(result1.getInstance().get(0).getFaceId(),
+                "testGroup", result3.getStringValue());
+    // Step 6. Get verify result.
+        if(!result5.getInstance().isIdentical())
+            fail("face verification failed.");
+        System.out.println(String.format("Confidence = %f", result5.getInstance().getConfidence()));
+
+    }*/
 
     /*public async Task<ActionResult> Train(String id)
     {
@@ -287,5 +371,5 @@ public class homeFragment extends Fragment implements View.OnClickListener {
         {
             System.out.println(e.getMessage());
         }*/
-    }
-}
+
+
