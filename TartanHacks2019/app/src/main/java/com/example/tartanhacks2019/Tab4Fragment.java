@@ -42,9 +42,6 @@ public class Tab4Fragment extends Fragment {
 
     private void loadContacts() {
         final ParseQuery<Person> query= ParseQuery.getQuery(Person.class);
-        //List<Person> people = query.find();
-        //gridAdapter = new GridAdapter(people);
-
         query.findInBackground(new FindCallback<Person>() {
             @Override
             public void done(List<Person> objects, ParseException e) {

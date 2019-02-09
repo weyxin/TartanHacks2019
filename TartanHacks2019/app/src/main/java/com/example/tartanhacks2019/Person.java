@@ -15,4 +15,6 @@ public class Person extends ParseObject {
         return getParseFile("MainImage");
     }
 
+    public String getRelationship() { return getString("Relationship"); }
+
 }
