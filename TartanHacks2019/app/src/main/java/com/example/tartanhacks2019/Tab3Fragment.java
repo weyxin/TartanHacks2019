@@ -59,7 +59,7 @@ public class Tab3Fragment extends Fragment {
             public void onClick(View v) {
                 currPlaylist = playlist1;
                 connected();
-                
+
             }
         });
         ivPlaylist2 = view.findViewById(R.id.ivPlaylist2);
@@ -127,6 +127,7 @@ public class Tab3Fragment extends Fragment {
                                     songArtist.setText(track.artist.name);
                                     user.put("lastSong", track.name);
                                     user.put("lastArtist", track.artist.name);
+                                    user.saveInBackground();
                                 }
                             });
                 }
@@ -170,6 +171,7 @@ public class Tab3Fragment extends Fragment {
                         songArtist.setText(track.artist.name);
                         user.put("lastSong", track.name);
                         user.put("lastArtist", track.artist.name);
+                        user.saveInBackground();
                     }
                 });
     }

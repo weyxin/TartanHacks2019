@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
                         FragmentTransaction tab3FragmentTransaction = fragmentManager.beginTransaction();
                         tab3FragmentTransaction.replace(R.id.flContainer, tab3Fragment).commit();
                         return true;
-                    case R.id.Tab4:
+                    case R.id.Gallery:
                         FragmentTransaction tab4FragmentTransaction = fragmentManager.beginTransaction();
                         tab4FragmentTransaction.replace(R.id.flContainer, tab4Fragment).commit();
                         return true;

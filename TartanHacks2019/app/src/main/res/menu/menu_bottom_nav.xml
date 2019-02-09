@@ -11,20 +11,20 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/Tab2"
-        android:title="Tab 2"
+        android:title="Flashcards"
         android:enabled="true"
         android:icon="@drawable/ic_home"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/Tab3"
-        android:title="Tab 3"
+        android:title="Music"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_music"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/Tab4"
-        android:title="Tab 4"
+        android:id="@+id/Gallery"
+        android:title="Gallery"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_gallery"
         app:showAsAction="ifRoom"/>
 </menu>
