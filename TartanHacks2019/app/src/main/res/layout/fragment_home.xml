@@ -13,6 +13,7 @@
         android:layout_height="fill_parent"
         android:id="@+id/imageView1"
         android:layout_above="@+id/button1"
+        android:src="@drawable/default_profile"
         android:contentDescription="Image with faces to analyze"/>
 
     <Button
@@ -20,6 +21,10 @@
         android:layout_height="wrap_content"
         android:text="Browse for a face image"
         android:id="@+id/button1"
+        android:background="#20BF9F"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textAllCaps="false"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
